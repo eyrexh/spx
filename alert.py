@@ -103,8 +103,9 @@ def check_stock_dip():
                 print(f"[{ticker}] 当前处于 {current_tier}% 档位，仍在 {COOLDOWN_DAYS} 天冷却期内，静音。")
 
         if should_alert:
+            my_discord_id = "947719513447735346"
             msg = (
-                f"📉 **阶梯加仓提醒: {ticker}**\n"
+                f"<@{my_discord_id}> 📉 **阶梯加仓提醒: {ticker}**\n"
                 f"当前价格 `${current_price:.2f}` 已从近一年高点 `${recent_high:.2f}` "
                 f"回撤了 **{drawdown * 100:.2f}%**！\n"
                 f"👉 触发【{tier_label}】档位：{action_msg}"
