@@ -27,6 +27,9 @@ jobs:
         env:
           # 已更新为你指定的 Secret 变量名
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_ID_ENV: ${{ secrets.DISCORD_ID }}
+          TELE_CHAT_ID_ENV: ${{ secrets.TELE_CHAT_ID }}
+          TELE_BOT_ENV: ${{ secrets.TELE_BOT }}
         # 已更新为你指定的 Python 脚本名
         run: python alert.py
         
