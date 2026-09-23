@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 # === 配置区 ===
-TICKER = "VFV" # 或 VFV.TO
+TICKER = "VOO" 
 WEBHOOKS_ENV = os.environ.get("DISCORD_WEBHOOK", "")
 DISCORD_WEBHOOKS = [url.strip() for url in WEBHOOKS_ENV.split(",") if url.strip()]
 STATE_FILE = "alert_state.json"
