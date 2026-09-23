@@ -113,6 +113,7 @@ def check_stock_dip():
                 f"👉 触发【{tier_label}】档位：{action_msg}"
             )
             send_discord_alert(msg)
+            send_telegram_alert(msg)
             
             ticker_state["last_tier"] = current_tier
             ticker_state["last_date"] = datetime.now().strftime("%Y-%m-%d")
