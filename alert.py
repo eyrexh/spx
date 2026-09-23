@@ -4,7 +4,8 @@ import os
 
 TICKER = "VFV"           
 DROP_THRESHOLD = 0.05    
-DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_URL")
+WEBHOOKS_ENV = os.environ.get("DISCORD_WEBHOOK", "")
+DISCORD_WEBHOOKS = [url.strip() for url in WEBHOOKS_ENV.split(",") if url.strip()]
 
 def check_stock_dip():
     stock = yf.Ticker(TICKER)
@@ -39,7 +40,7 @@ def check_stock_dip():
 
 def send_discord_alert(message):
     if not DISCORD_WEBHOOK:
-        print("未配置 DISCORD_WEBHOOK_URL 环境变量，跳过发送。")
+        print("未配置 DISCORD_WEBHOOK 环境变量，跳过发送。")
         return
         
     response = requests.post(DISCORD_WEBHOOK, json={"content": message})
