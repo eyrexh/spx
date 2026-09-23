@@ -145,4 +145,14 @@ def send_discord_alert(message):
         requests.post(webhook, json={"content": message})
 
 if __name__ == "__main__":
-    check_stock_dip()
+    print("开始测试消息推送...")
+    
+    test_msg = "🔔 **系统测试**：如果你看到了这条消息，说明 Discord 和 Telegram 的配置都完美生效了！"
+    
+    print("1. 测试 Discord...")
+    send_discord_alert(test_msg)
+    
+    print("2. 测试 Telegram...")
+    send_telegram_alert(test_msg)
+    
+    # check_stock_dip()
