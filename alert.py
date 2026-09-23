@@ -43,7 +43,6 @@ def check_stock_dip():
         recent_high = hist['Close'].max()
         drawdown = (recent_high - current_price) / recent_high
         
-        # 已修复语法错误：完全移除了可能导致渲染 Bug 的特殊符号
         print(f"[{ticker}] 当前价格: ${current_price:.2f}, 52周高点: ${recent_high:.2f}, 回撤: {drawdown * 100:.2f}%")
         
         # 获取该 Ticker 的历史状态
