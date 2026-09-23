@@ -9,6 +9,9 @@ from datetime import datetime
 TICKERS = ["VOO", "XEQT.TO"] 
 WEBHOOKS_ENV = os.environ.get("DISCORD_WEBHOOK", "")
 DISCORD_WEBHOOKS = [url.strip() for url in WEBHOOKS_ENV.split(",") if url.strip()]
+my_discord_id = os.environ.get("DISCORD_ID_ENV", "")
+tele_bot_token = os.environ.get("TELE_BOT_ENV", "")
+tele_chat_id = os.environ.get("TELE_CHAT_ID_ENV", "")
 STATE_FILE = "alert_state.json"
 COOLDOWN_DAYS = 7
 
@@ -103,7 +106,6 @@ def check_stock_dip():
                 print(f"[{ticker}] 当前处于 {current_tier}% 档位，仍在 {COOLDOWN_DAYS} 天冷却期内，静音。")
 
         if should_alert:
-            my_discord_id = "947719513447735346"
             msg = (
                 f"<@{my_discord_id}> 📉 **阶梯加仓提醒: {ticker}**\n"
                 f"当前价格 `${current_price:.2f}` 已从近一年高点 `${recent_high:.2f}` "
@@ -120,6 +122,20 @@ def check_stock_dip():
     if state_changed:
         save_state(all_states)
         print("\n已保存所有状态更新。")
+
+def send_telegram_alert(message):
+
+    url = f"https://api.telegram.org/bot{tele_bot_token}/sendMessage"
+    payload = {
+        "chat_id": tele_chat_id,
+        "text": message,
+        "parse_mode": "Markdown"
+    }
+    response = requests.post(url, json=payload)
+    if response.status_code == 200:
+        print("Telegram 提醒发送成功！")
+    else:
+        print(f"发送失败: {response.text}")
 
 def send_discord_alert(message):
     if not DISCORD_WEBHOOKS:
