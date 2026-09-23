@@ -1,11 +1,16 @@
 name: Stock Dip Monitor
 
-on:
-  workflow_dispatch:
+on: 
+  workflow_dispatch: 
 
 jobs:
   check-market:
     runs-on: ubuntu-latest
+    
+    # 给 Actions 读写仓库的权限，用于保存 alert_state.json 状态文件
+    permissions:
+      contents: write 
+      
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -20,5 +25,14 @@ jobs:
 
       - name: Run Alert Script
         env:
+          # 已更新为你指定的 Secret 变量名
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        # 已更新为你指定的 Python 脚本名
         run: python alert.py
+        
+      - name: Commit and push state
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add alert_state.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: 自动更新加仓提醒状态 [skip ci]" && git push)
