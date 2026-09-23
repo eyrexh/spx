@@ -42,9 +42,9 @@ def check_stock_dip():
         current_price = hist['Close'].iloc[-1]
         recent_high = hist['Close'].max()
         drawdown = (recent_high - current_price) / recent_high
-
-        print(f"[{ticker}] 当前价格: ${current_price:.2f} \vert{} 52周高点: ${recent_high:.2f} | 回撤: {drawdown * 100:.2f}%")
-
+        
+        print(f"[{ticker}] 当前价格: ${current_price:.2f}, 52周高点: ${recent_high:.2f}, 回撤: {drawdown * 100:.2f}%")
+        
         # 获取该 Ticker 的历史状态
         ticker_state = all_states.get(ticker, {"last_tier": 0, "last_date": "2000-01-01"})
         last_tier = ticker_state["last_tier"]
