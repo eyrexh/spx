@@ -5,7 +5,8 @@ on:
 
 jobs:
   check-market:
-    runs-on: ubuntu-latest
+    # 锁定为 ubuntu-24.04，消除 Ubuntu 26 的升级警告
+    runs-on: ubuntu-24.04
     
     # 给 Actions 读写仓库的权限，用于保存 alert_state.json 状态文件
     permissions:
